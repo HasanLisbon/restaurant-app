@@ -10,7 +10,7 @@
   <title>Restaurant Info</title>
 </head>
 
-<body class="inside">
+<body class="inside"> 
   <!-- Beginning header -->
   <header>
     <!-- Beginning nav -->
@@ -30,11 +30,11 @@
   <main id="maincontent">
     <!-- Beginning map -->
     <section id="map-container">
-      <div id="map"></div>
+      <div id="map" aria-hidden="true"></div>
     </section>
     <!-- End map -->
     <!-- Beginning restaurant -->
-    <section id="restaurant-container">
+    <section id="restaurant-container" role="textbox" aria-label="Info about the Restaurant">
       <h1 id="restaurant-name"></h1>
       <img id="restaurant-img">
       <p id="restaurant-cuisine"></p>
@@ -43,7 +43,7 @@
     </section>
     <!-- end restaurant -->
     <!-- Beginning reviews -->
-    <section id="reviews-container">
+    <section id="reviews-container" role="textbox" aria-label="Reviews of the Restaurant">
       <ul id="reviews-list"></ul>
     </section>
     <!-- End reviews -->
@@ -52,8 +52,8 @@
 
   <!-- Beginning footer -->
   <footer id="footer">
-    Copyright (c) 2018 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
-  </footer>
+    Copyright (c) 2018 <a href="/" aria-label="go back to the main page"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
+  </footer> 
   <!-- End footer -->
 
   <!-- Beginning scripts -->

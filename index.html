@@ -10,22 +10,23 @@
 
 <body>
   <header>
+    <a href="#filter-options" class="skip-link">Skip to the main content</a>
     <nav>
       <h1><a href="/">Restaurant Reviews</a></h1>
     </nav>
   </header>
 
   <main id="maincontent">
-    <section id="map-container">
-      <div id="map"></div>
+    <sectionid="map-container">
+      <div id="map" aria-hidden="true"></div>  
     </section>
-    <section>
+    <section id="filter-options" tabindex=-1>
       <div class="filter-options">
         <h2>Filter Results</h2>
-        <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()">
+        <select aria-label="filter by neighborhoods" id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()">
           <option value="all">All Neighborhoods</option>
         </select>
-        <select id="cuisines-select" name="cuisines" onchange="updateRestaurants()">
+        <select aria-label="filter by cuisines" id="cuisines-select" name="cuisines" onchange="updateRestaurants()">
           <option value="all">All Cuisines</option>
         </select>
       </div>

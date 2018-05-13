@@ -10,7 +10,22 @@ var markers = []
 document.addEventListener('DOMContentLoaded', (event) => {
   fetchNeighborhoods();
   fetchCuisines();
+  regusterServiceWorker();
 });
+
+/**
+ * Adding Service Worker to the website
+ */
+regusterServiceWorker = () => {
+  if (!navigator.serviceWorker) return;
+
+  navigator.serviceWorker.register('/sw.js').then(function() {
+    console.log('Registration worked!');
+  }).catch(function() {
+    console.log('Registration failed!');
+  })
+}
+
 
 /**
  * Fetch all neighborhoods and set their HTML.
@@ -140,6 +155,7 @@ createRestaurantHTML = (restaurant) => {
 
   const image = document.createElement('img');
   image.className = 'restaurant-img';
+  image.alt = DBHelper.imageAtlTag(restaurant);
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
   li.append(image);
 
@@ -158,6 +174,7 @@ createRestaurantHTML = (restaurant) => {
   const more = document.createElement('a');
   more.innerHTML = 'View Details';
   more.href = DBHelper.urlForRestaurant(restaurant);
+  more.setAttribute('aria-label', `View Details ${DBHelper.imageAtlTag(restaurant)}`);
   li.append(more)
 
   return li

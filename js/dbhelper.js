@@ -154,6 +154,13 @@ class DBHelper {
   }
 
   /**
+   * Restaurant image Atl tag.
+   */
+  static imageAtlTag(restaurant) {
+    return (`Restaurant ${restaurant.name}`);
+  }
+
+  /**
    * Map marker for a restaurant.
    */
   static mapMarkerForRestaurant(restaurant, map) {
