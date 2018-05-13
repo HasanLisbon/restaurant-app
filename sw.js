@@ -1,6 +1,8 @@
+var staticCacheName = 'restaurant-app-v1'
+
 self.addEventListener('install', function(event) {
     event.waitUntil(
-        caches.open('restaurant-app-v1').then(function(cache) {
+        caches.open(staticCacheName).then(function(cache) {
             return cache.addAll([
                 '/',
                 'restaurant.html',
@@ -20,6 +22,21 @@ self.addEventListener('install', function(event) {
                 '/img/9.jpg',
                 '/img/10.jpg'
             ]);
+        })
+    );
+});
+
+self.addEventListener('activate', function(event) {
+    event.waitUntil(
+        caches.keys().then(function(cacheNames) {
+            return Promise.all(
+                cacheNames.filter(function(cacheName) {
+                    return cacheName.startsWith('restaurant-app-') &&
+                        cacheName != staticCacheName;
+                }).map(function(cacheName) {
+                    return caches.delete(cacheName);
+                })
+            )
         })
     );
 });
