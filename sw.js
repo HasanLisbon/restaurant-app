@@ -1,4 +1,4 @@
-var staticCacheName = 'restaurant-app-v1';
+var staticCacheName = 'restaurant-app-v2';
 var urlToCache = [
     '/',
     'restaurant.html',
@@ -18,6 +18,18 @@ var urlToCache = [
     '/img/9.jpg',
     '/img/10.jpg'
 ];
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/sw.js').then(function(registration) {
+        // Registration was successful
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      }, function(err) {
+        // registration failed :(
+        console.log('ServiceWorker registration failed: ', err);
+      });
+    });
+  }
 
 self.addEventListener('install', function(event) {
     event.waitUntil(
