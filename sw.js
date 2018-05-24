@@ -6,7 +6,7 @@ var urlToCache = [
     '/js/dbhelper.js',
     '/js/restaurant_info.js',
     '/css/styles.css',
-    '/data/restaurants.json',
+    // '/data/restaurants.json',
     '/img/1.jpg',
     '/img/2.jpg',
     '/img/3.jpg',
