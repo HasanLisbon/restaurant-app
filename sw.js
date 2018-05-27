@@ -1,12 +1,13 @@
-var staticCacheName = 'restaurant-app-v2';
+var staticCacheName = 'restaurant-app-v3';
 var urlToCache = [
     '/',
+    '/js/idb.js',
     'restaurant.html',
-    '/js/main.js',
     '/js/dbhelper.js',
+    '/js/main.js',
     '/js/restaurant_info.js',
+    'sw.js',
     '/css/styles.css',
-    // '/data/restaurants.json',
     '/img/1.jpg',
     '/img/2.jpg',
     '/img/3.jpg',
@@ -19,46 +20,41 @@ var urlToCache = [
     '/img/10.jpg'
 ];
 
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-      navigator.serviceWorker.register('/sw.js').then(function(registration) {
-        // Registration was successful
-        console.log('ServiceWorker registration successful with scope: ', registration.scope);
-      }, function(err) {
-        // registration failed :(
-        console.log('ServiceWorker registration failed: ', err);
-      });
-    });
-  }
-
 self.addEventListener('install', function(event) {
     event.waitUntil(
-        caches.open(staticCacheName).then(function(cache) {
-            return cache.addAll(urlToCache);
-        })
+      caches.open(staticCacheName).then(function(cache) {
+        return cache.addAll(urlToCache);
+      })
     );
-});
+  });
 
-self.addEventListener('activate', function(event) {
+  self.addEventListener('activate', function(event) {
     event.waitUntil(
-        caches.keys().then(function(cacheNames) {
-            return Promise.all(
-                cacheNames.filter(function(cacheName) {
-                    return cacheName.startsWith('restaurant-app-') &&
-                        cacheName != staticCacheName;
-                }).map(function(cacheName) {
-                    return caches.delete(cacheName);
-                })
-            )
-        })
+      caches.keys().then(function(cacheNames) {
+        return Promise.all(
+          cacheNames.filter(function(cacheName) {
+            return cacheName.startsWith('restaurant-app-') &&
+                   cacheName != staticCacheName;
+          }).map(function(cacheName) {
+            return caches.delete(cacheName);
+          })
+        );
+      })
     );
-});
+  });
 
-self.addEventListener('fetch', function(event) {
-    event.respondWith(
-        caches.match(event.request).then(function(response) {
-            if (response) return response;
-            return fetch(event.request);
-        })
-    )
-})
+  self.addEventListener('fetch', function(event) {
+      event.respondWith(
+          caches.match(event.request).then(function(response) {
+              if (response) return response;
+              return fetch(event.request);
+          })
+      )
+  });
+  
+  self.addEventListener('message', function(event) {
+    if (event.data.action === 'skipWaiting') {
+      self.skipWaiting();
+    }
+  });
+  

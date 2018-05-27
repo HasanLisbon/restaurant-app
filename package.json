@@ -1,0 +1,14 @@
+{
+  "name": "Restaurant-Reviews-app",
+  "version": "1.0",
+  "description": "Udacity course app",
+  "dependencies": {
+    "idb": "^2.1.2"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Staswebd/restaurant-app.git"
+  },
+  "author": "Stas K."
+}
