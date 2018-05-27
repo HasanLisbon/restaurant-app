@@ -1,9 +1,14 @@
+/*eslint-env es6*/
+/*global idb Promise google*/
+/*eslint no-undef: "error"*/
+
 const DB_REST = 'restaurant-app-db';
 const DB_REST_OBJ = 'restaurant-obj';
 
 /**
  * Common database helper functions.
  */
+/*eslint-disable no-unused-vars*/
 class DBHelper {
 
   /**
@@ -11,7 +16,7 @@ class DBHelper {
    * Change this to restaurants.json file location on your server.
    */
   static get DB_URL() {
-    const port = 1337 // Change this to your server port
+    const port = 1337; // Change this to your server port
     return `http://localhost:${port}/restaurants`;
   }
 
@@ -22,12 +27,14 @@ class DBHelper {
     if (!navigator.serviceWorker) {
       return Promise.resolve();
     }
+    /*eslint-disable no-undef*/
     return idb.open(DB_REST, 1, function (upgradeDb) {
       var store = upgradeDb.createObjectStore(DB_REST_OBJ, {
         keyPath: 'id'
       });
       store.createIndex('by-id', 'id');
     });
+    /*eslint-enable no-undef*/
   }
 
   /*
@@ -149,7 +156,7 @@ class DBHelper {
       if (error) {
         callback(error, null);
       } else {
-        let results = restaurants
+        let results = restaurants;
         if (cuisine != 'all') { // filter by cuisine
           results = results.filter(r => r.cuisine_type == cuisine);
         }
@@ -171,9 +178,9 @@ class DBHelper {
         callback(error, null);
       } else {
         // Get all neighborhoods from all restaurants
-        const neighborhoods = restaurants.map((v, i) => restaurants[i].neighborhood)
+        const neighborhoods = restaurants.map((v, i) => restaurants[i].neighborhood);
         // Remove duplicates from neighborhoods
-        const uniqueNeighborhoods = neighborhoods.filter((v, i) => neighborhoods.indexOf(v) == i)
+        const uniqueNeighborhoods = neighborhoods.filter((v, i) => neighborhoods.indexOf(v) == i);
         callback(null, uniqueNeighborhoods);
       }
     });
@@ -189,9 +196,9 @@ class DBHelper {
         callback(error, null);
       } else {
         // Get all cuisines from all restaurants
-        const cuisines = restaurants.map((v, i) => restaurants[i].cuisine_type)
+        const cuisines = restaurants.map((v, i) => restaurants[i].cuisine_type);
         // Remove duplicates from cuisines
-        const uniqueCuisines = cuisines.filter((v, i) => cuisines.indexOf(v) == i)
+        const uniqueCuisines = cuisines.filter((v, i) => cuisines.indexOf(v) == i);
         callback(null, uniqueCuisines);
       }
     });
@@ -222,6 +229,7 @@ class DBHelper {
    * Map marker for a restaurant.
    */
   static mapMarkerForRestaurant(restaurant, map) {
+    /*eslint-disable no-undef*/
     const marker = new google.maps.Marker({
       position: restaurant.latlng,
       title: restaurant.name,
@@ -230,6 +238,7 @@ class DBHelper {
       animation: google.maps.Animation.DROP
     }
     );
+    /*eslint-enable no-undef*/
     return marker;
   }
 
