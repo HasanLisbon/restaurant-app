@@ -11,6 +11,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var webserver = require('gulp-webserver');
 var imagemin = require('gulp-imagemin');
 var pngquant = require('imagemin-pngquant');
+var intersectionObserver = require('intersection-observer-polyfill');
 
 gulp.task('default', ['copy-html', 'copy-images', 'copy-manifest', 'styles', 'lint', 'copy-scripts'], function() {
   gulp.watch('sass/**/*.scss', ['styles']);
