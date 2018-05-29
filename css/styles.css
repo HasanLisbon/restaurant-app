@@ -112,6 +112,13 @@ nav h1 a {
   width: 100%;
   background-color: #ccc; }
 
+#fake-map {
+    height: 400px;
+    width: 100%;
+    background-image: url("../img/map.webp");
+    margin: 0;
+    background-position: center; }
+
 /* ====================== Restaurant Filtering ====================== */
 .filter-options {
   width: 100%;

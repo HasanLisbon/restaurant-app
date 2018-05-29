@@ -4,6 +4,7 @@
 let restaurants,
   neighborhoods,
   cuisines;
+let fakeMap = true;
 var map;
 var markers = [];
 /*eslint-enable no-unused-vars*/
@@ -58,6 +59,8 @@ function fetchCuisines() {
     } else {
       self.cuisines = cuisines;
       fillCuisinesHTML();
+      document.getElementById('fake-map').addEventListener('click', initMap);
+      updateRestaurants();
     }
   });
 }
@@ -79,7 +82,7 @@ function fillCuisinesHTML(cuisines = self.cuisines) {
 /**
  * Initialize Google map, called from HTML.
  */
-window.initMap = () => {
+function initMap() {
   let loc = {
     lat: 40.722216,
     lng: -73.987501
@@ -89,8 +92,10 @@ window.initMap = () => {
     center: loc,
     scrollwheel: false
   });
-  updateRestaurants();
-};
+  addMarkersToMap();
+  // updateRestaurants();
+  return fakeMap = false;
+}
 
 /**
  * Update page and map for current restaurants.
@@ -139,7 +144,7 @@ function fillRestaurantsHTML(restaurants = self.restaurants) {
     ul.append(createRestaurantHTML(restaurant));
   });
   addLazyLoader();
-  addMarkersToMap();
+  // if (fakeMap === false) addMarkersToMap();
 }
 
 /**
@@ -152,7 +157,7 @@ function createRestaurantHTML(restaurant) {
   // image.className = 'restaurant-img';
   image.setAttribute('class', 'restaurant-img lazy');
   image.alt = DBHelper.imageAtlTag(restaurant);
-  image.src = 'img/placeholder.jpg';
+  image.src = 'img/placeholder.webp';
   image.setAttribute('data-src', DBHelper.imageUrlForRestaurant(restaurant));
   image.setAttribute('data-srcset', DBHelper.imageUrlForRestaurant(restaurant));
   li.append(image);
