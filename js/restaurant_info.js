@@ -12,7 +12,7 @@ var map;
 /*eslint-disable no-unused-vars*/
 document.addEventListener('DOMContentLoaded', (event) => {
   /*eslint-disable no-undef*/
-  DBHelper.startServiceWorker();
+  // DBHelper.startServiceWorker();
   /*eslint-enable no-undef*/
 });
 /*eslint-enable no-undef*/
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 /**
  * Initialize Google map, called from HTML.
  */
-window.initMap = () => {
+window.initMap = () => { // OK
   fetchRestaurantFromURL((error, restaurant) => {
     if (error) { // Got an error!
       console.error(error);
@@ -58,8 +58,14 @@ function fetchRestaurantFromURL(callback) {
         console.error(error);
         return;
       }
-      fillRestaurantHTML();
-      callback(null, restaurant);
+      DBHelper.fetchRestaurantReviews(self.restaurant, (error, reviews) => {
+        self.restaurant.reviews = reviews;
+        if (!reviews) {
+          console.error(error);
+        }
+        fillRestaurantHTML();
+        callback(null, restaurant);
+      });
     });
   }
 }
@@ -67,7 +73,7 @@ function fetchRestaurantFromURL(callback) {
 /**
  * Create restaurant HTML and add it to the webpage
  */
-function fillRestaurantHTML(restaurant = self.restaurant) {
+function fillRestaurantHTML(restaurant = self.restaurant) { // OK
   const name = document.getElementById('restaurant-name');
   name.innerHTML = restaurant.name;
   name.tabIndex = '0';
@@ -96,7 +102,7 @@ function fillRestaurantHTML(restaurant = self.restaurant) {
 /**
  * Create restaurant operating hours HTML table and add it to the webpage.
  */
-function fillRestaurantHoursHTML(operatingHours = self.restaurant.operating_hours) {
+function fillRestaurantHoursHTML(operatingHours = self.restaurant.operating_hours) { // OK
   const hours = document.getElementById('restaurant-hours');
   //for (let key in operatingHours) {
   for (let key in operatingHours) {
@@ -120,7 +126,7 @@ function fillRestaurantHoursHTML(operatingHours = self.restaurant.operating_hour
 /**
  * Create all reviews HTML and add them to the webpage.
  */
-function fillReviewsHTML(reviews = self.restaurant.reviews) {
+function fillReviewsHTML(reviews = self.restaurant.reviews) { // OK
   const container = document.getElementById('reviews-container');
   const title = document.createElement('h3');
   title.innerHTML = 'Reviews';
@@ -144,7 +150,7 @@ function fillReviewsHTML(reviews = self.restaurant.reviews) {
 /**
  * Create review HTML and add it to the webpage.
  */
-function createReviewHTML(review) {
+function createReviewHTML(review) { // OK
   const li = document.createElement('li');
   const name = document.createElement('p');
   name.innerHTML = review.name;
@@ -152,7 +158,7 @@ function createReviewHTML(review) {
   li.appendChild(name);
 
   const date = document.createElement('p');
-  date.innerHTML = review.date;
+  date.innerHTML = new Date(review.updatedAt).toDateString();
   date.tabIndex = '0';
   li.appendChild(date);
 
@@ -169,10 +175,27 @@ function createReviewHTML(review) {
   return li;
 }
 
+const form = document.getElementById('reviewForm');
+form.addEventListener('submit', function (event) {
+  event.preventDefault();
+  let review = {'restaurant_id': self.restaurant.id};
+  const formdata = new FormData(form);
+  for (var [key, value] of formdata.entries()) {
+    review[key] = value;
+  }
+  DBHelper.submitReview(review)
+    .then(data => {
+      const ul = document.getElementById('reviews-list');
+      ul.appendChild(createReviewHTML(review));
+      form.reset();
+    })
+    .catch(error => console.error(error));
+});
+
 /**
  * Add restaurant name to the breadcrumb navigation menu
  */
-function fillBreadcrumb(restaurant = self.restaurant) {
+function fillBreadcrumb(restaurant = self.restaurant) { // OK
   const breadcrumb = document.getElementById('breadcrumb');
   const li = document.createElement('li');
   li.setAttribute('aria-current', 'page');
@@ -183,7 +206,7 @@ function fillBreadcrumb(restaurant = self.restaurant) {
 /**
  * Get a parameter by name from page URL.
  */
-function getParameterByName(name, url) {
+function getParameterByName(name, url) { // OK
   if (!url)
     url = window.location.href;
   name = name.replace(/[[\]]/g, '\\$&');

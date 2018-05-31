@@ -3,26 +3,32 @@
 
 <head>
   <meta charset="utf-8">
+  <meta name="theme-color" content="#f3f3f3" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Normalize.css for better cross-browser consistency -->
   <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
   <!-- Main CSS file -->
   <link rel="stylesheet" href="css/styles.css" type="text/css">
+  <link rel="manifest" href="manifest.json">
   <title>Restaurant Info</title>
 </head>
 
-<body class="inside"> 
+<body class="inside">
   <!-- Beginning header -->
   <header>
     <!-- Beginning nav -->
     <nav>
-      <h1><a href="/">Restaurant Reviews</a></h1>
+      <h1>
+        <a href="/">Restaurant Reviews</a>
+      </h1>
       <!-- Beginning breadcrumb -->
       <nav aria-label="Breadcrumb" class="breadcrumb">
-          <ul id="breadcrumb" aria-label="Breadcrumb">
-            <li><a href="index.html">Home</a></li>
-          </ul>
-        </nav>
+        <ul id="breadcrumb" aria-label="Breadcrumb">
+          <li>
+            <a href="index.html">Home</a>
+          </li>
+        </ul>
+      </nav>
       <!-- End breadcrumb -->
     </nav>
     <!-- End nav -->
@@ -37,34 +43,66 @@
     </section>
     <!-- End map -->
     <div role="main">
-        <!-- Beginning restaurant -->
-        <section id="restaurant-container" role="textbox" aria-label="Info about the Restaurant">
-          <h2 id="restaurant-name" tabindex="0"></h2>
-          <img id="restaurant-img">
-          <p id="restaurant-cuisine" tabindex="0"></p>
-          <p id="restaurant-address" tabindex="0"></p>
-          <table id="restaurant-hours" tabindex="0"></table>
-        </section>
-        <!-- end restaurant -->
-        <!-- Beginning reviews -->
-        <section id="reviews-container" aria-label="Reviews of the Restaurant">
-          <ul id="reviews-list" tabindex="0"></ul>
-        </section>
-        <!-- End reviews -->
+      <!-- Beginning restaurant -->
+      <section id="restaurant-container" role="textbox" aria-label="Info about the Restaurant">
+        <h2 id="restaurant-name" tabindex="0"></h2>
+        <p>
+          <input type="checkbox" id="favCheck">
+          <label for="favCheck">Favorite</label>
+        </p>
+        <img id="restaurant-img">
+        <p id="restaurant-cuisine" tabindex="0"></p>
+        <p id="restaurant-address" tabindex="0"></p>
+        <table id="restaurant-hours" tabindex="0"></table>
+      </section>
+      <!-- end restaurant -->
+      <!-- Beginning reviews -->
+      <section id="reviews-container" aria-label="Reviews of the Restaurant">
+        <ul id="reviews-list" tabindex="0"></ul>
+        <form id="reviewForm">
+          <p>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Your Name" required/>
+          </p>
+          <p>&nbsp;</p>
+          <p>
+            <label for="rating">Rating</label>
+            <select name="rating">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5" selected>5</option>
+            </select>
+          </p>
+          <p>
+            <!-- <label for="reviewText">Review text:</label> -->
+            <textarea rows="6" name="comments" placeholder="Write your review here" required></textarea>
+          </p>
+          <p>
+            <input type="submit" value="Submit Review">
+          </p>
+        </form>
+      </section>
+      <!-- End reviews -->
     </div>
   </main>
   <!-- End main -->
 
   <!-- Beginning footer -->
   <footer id="footer">
-    Copyright (c) 2018 <a href="/" aria-label="go back to the main page"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
-  </footer> 
+    Copyright (c) 2018
+    <a href="/" aria-label="go back to the main page">
+      <strong>Restaurant Reviews</strong>
+    </a> All Rights Reserved.
+  </footer>
   <!-- End footer -->
 
   <!-- Beginning scripts -->
   <script type="text/javascript" charset="utf-8" src="js/idb.js"></script>
   <script type="text/javascript" src="js/dbhelper.js"></script>
   <script type="text/javascript" src="js/restaurant_info.js"></script>
+  <script type="application/javascript" charset="utf-8" src="js/register_sw.js"></script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKsD3Iz_-scs8QAKYhnFz07U1_SaxfEGo&libraries=places&callback=initMap"></script>
   <!-- End scripts -->
 

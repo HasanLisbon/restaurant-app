@@ -15,7 +15,7 @@ var markers = [];
 /*eslint-disable no-unused-vars*/
 /*eslint-disable no-undef*/
 document.addEventListener('DOMContentLoaded', (event) => { // eslint-disable-line no-unused-vars
-  DBHelper.startServiceWorker();
+  // DBHelper.startServiceWorker();
   fetchNeighborhoods();
   fetchCuisines();
 });
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', (event) => { // eslint-disable-lin
  * Fetch all neighborhoods and set their HTML.
  */
 /*eslint-disable no-undef*/
-function fetchNeighborhoods() {
+function fetchNeighborhoods() { // OK
   DBHelper.fetchNeighborhoods((error, neighborhoods) => {
     if (error) { // Got an error
       console.error(error);
@@ -39,7 +39,7 @@ function fetchNeighborhoods() {
 /**
  * Set neighborhoods HTML.
  */
-function fillNeighborhoodsHTML(neighborhoods = self.neighborhoods) {
+function fillNeighborhoodsHTML(neighborhoods = self.neighborhoods) { // OK
   const select = document.getElementById('neighborhoods-select');
   neighborhoods.forEach(neighborhood => {
     const option = document.createElement('option');
@@ -52,7 +52,7 @@ function fillNeighborhoodsHTML(neighborhoods = self.neighborhoods) {
 /**
  * Fetch all cuisines and set their HTML.
  */
-function fetchCuisines() {
+function fetchCuisines() { // OK
   DBHelper.fetchCuisines((error, cuisines) => {
     if (error) { // Got an error!
       console.error(error);
@@ -68,7 +68,7 @@ function fetchCuisines() {
 /**
  * Set cuisines HTML.
  */
-function fillCuisinesHTML(cuisines = self.cuisines) {
+function fillCuisinesHTML(cuisines = self.cuisines) { // OK
   const select = document.getElementById('cuisines-select');
 
   cuisines.forEach(cuisine => {
@@ -82,7 +82,7 @@ function fillCuisinesHTML(cuisines = self.cuisines) {
 /**
  * Initialize Google map, called from HTML.
  */
-function initMap() {
+function initMap() { // OK
   let loc = {
     lat: 40.722216,
     lng: -73.987501
@@ -100,7 +100,7 @@ function initMap() {
 /**
  * Update page and map for current restaurants.
  */
-function updateRestaurants() {
+function updateRestaurants() { // OK
   const cSelect = document.getElementById('cuisines-select');
   const nSelect = document.getElementById('neighborhoods-select');
 
@@ -123,7 +123,7 @@ function updateRestaurants() {
 /**
  * Clear current restaurants, their HTML and remove their map markers.
  */
-function resetRestaurants(restaurants) {
+function resetRestaurants(restaurants) { // OK
   // Remove all restaurants
   self.restaurants = [];
   const ul = document.getElementById('restaurants-list');
@@ -138,7 +138,7 @@ function resetRestaurants(restaurants) {
 /**
  * Create all restaurants HTML and add them to the webpage.
  */
-function fillRestaurantsHTML(restaurants = self.restaurants) {
+function fillRestaurantsHTML(restaurants = self.restaurants) { // OK
   const ul = document.getElementById('restaurants-list');
   restaurants.forEach(restaurant => {
     ul.append(createRestaurantHTML(restaurant));
@@ -150,7 +150,7 @@ function fillRestaurantsHTML(restaurants = self.restaurants) {
 /**
  * Create restaurant HTML.
  */
-function createRestaurantHTML(restaurant) {
+function createRestaurantHTML(restaurant) { // OK
   const li = document.createElement('li');
 
   const image = document.createElement('img');
@@ -186,7 +186,7 @@ function createRestaurantHTML(restaurant) {
 /**
  * Add markers for current restaurants to the map.
  */
-function addMarkersToMap(restaurants = self.restaurants) {
+function addMarkersToMap(restaurants = self.restaurants) { // OK
   restaurants.forEach(restaurant => {
     // Add marker to the map
     const marker = DBHelper.mapMarkerForRestaurant(restaurant, self.map);
@@ -198,7 +198,7 @@ function addMarkersToMap(restaurants = self.restaurants) {
 }
 /*eslint-disable no-undef*/
 
-function addLazyLoader() {
+function addLazyLoader() { // OK
   let lazyImages = [].slice.call(document.querySelectorAll('img.restaurant-img'));
   let active = false;
 
