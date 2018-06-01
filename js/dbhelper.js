@@ -43,20 +43,15 @@ class DBHelper {
   static fetchRestaurants(callback) {
     DBHelper.idbOpen.then(db => {
       if (!db) return;
-      // 1. Look for restaurants in IDB
       const tx = db.transaction('restaurant-obj');
       const store = tx.objectStore('restaurant-obj');
       store.getAll().then(results => {
         if (results.length === 0) {
-          // No restaurants in IDB found
-          // 2. Fetch restaurants from network
           fetch(`${DBHelper.DB_URL}/restaurants`)
             .then(response => {
               return response.json();
             })
             .then(restaurants => {
-              // Restaurants fetched from network
-              // 3. Put fetched restaurants into IDB
               const tx = db.transaction('restaurant-obj', 'readwrite');
               const store = tx.objectStore('restaurant-obj');
               restaurants.forEach(restaurant => {
@@ -65,75 +60,14 @@ class DBHelper {
               callback(null, restaurants);
             })
             .catch(error => {
-              // Unable to fetch from network
               callback(error, null);
             });
         } else {
-          // Restaurants found in IDB
           callback(null, results);
         }
       });
     });
   }
-
-  // /*
-  //  * Save data to IDB database
-  //  */
-  // static idbSave(data) {
-  //   return DBHelper.idbOpen().then(function (db) {
-  //     if (!db)
-  //       return;
-
-  //     var tx = db.transaction(DB_REST_OBJ, 'readwrite');
-  //     var store = tx.objectStore(DB_REST_OBJ);
-  //     data.forEach(function (restaurant) {
-  //       store.put(restaurant);
-  //     });
-  //     return tx.complete;
-  //   });
-  // }
-
-  // /**
-  //  * Fetch all restaurants from API and save to IndexedDb
-  //  */
-  // static fetchRestaurantsAPI() {
-  //   return fetch(DBHelper.DB_URL)
-  //     .then(function (response) {
-  //       return response.json();
-  //     }).then(restaurants => {
-  //       DBHelper.idbSave(restaurants);
-  //       return restaurants;
-  //     });
-  // }
-
-  // /*
-  //  * Get data from IDB
-  //  */
-  // static getCachedRestaurants() {
-  //   return DBHelper.idbOpen().then(function (db) {
-  //     if (!db)
-  //       return;
-  //     var store = db.transaction(DB_REST_OBJ).objectStore(DB_REST_OBJ);
-  //     return store.getAll();
-  //   });
-  // }
-
-  // /**
-  //  * Fetch all restaurants.
-  //  */
-  // static fetchRestaurants(callback) {
-  //   return DBHelper.getCachedRestaurants().then(restaurants => {
-  //     if (restaurants.length) {
-  //       return Promise.resolve(restaurants);
-  //     } else {
-  //       return DBHelper.fetchRestaurantsAPI();
-  //     }
-  //   }).then(restaurants => {
-  //     callback(null, restaurants);
-  //   }).catch(error => {
-  //     callback(error, null);
-  //   });
-  // }
 
   /**
    * Fetch a restaurant by its ID.
@@ -246,15 +180,12 @@ class DBHelper {
   static fetchRestaurantReviews(restaurant, callback) {
     DBHelper.idbOpen.then(db => {
       if (!db) return;
-      // 1. Check if there are reviews in the IDB
       const tx = db.transaction('reviews-obj');
       const store = tx.objectStore('reviews-obj');
       store.getAll().then(results => {
         if (results && results.length > 0) {
-          // Continue with reviews from IDB
           callback(null, results);
         } else {
-          // 2. If there are no reviews in the IDB, fetch reviews from the network
           fetch(`${DBHelper.DB_URL}/reviews/?restaurant_id=${restaurant.id}`)
             .then(response => {
               return response.json();
@@ -262,18 +193,15 @@ class DBHelper {
             .then(reviews => {
               this.idbOpen.then(db => {
                 if (!db) return;
-                // 3. Put fetched reviews into IDB
                 const tx = db.transaction('reviews-obj', 'readwrite');
                 const store = tx.objectStore('reviews-obj');
                 reviews.forEach(review => {
                   store.put(review);
                 });
               });
-              // Continue with reviews from network
               callback(null, reviews);
             })
             .catch(error => {
-              // Unable to fetch reviews from network
               callback(error, null);
             });
         }
@@ -328,22 +256,21 @@ class DBHelper {
 		
     return fetch(`${DBHelper.DB_URL}/reviews`, {
       body: JSON.stringify(data), 
-      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: 'same-origin', // include, same-origin, *omit
+      cache: 'no-cache',
+      credentials: 'same-origin',
       headers: {
         'content-type': 'application/json'
       },
       method: 'POST',
-      mode: 'cors', // no-cors, cors, *same-origin
-      redirect: 'follow', // *manual, follow, error
-      referrer: 'no-referrer', // *client, no-referrer
+      mode: 'cors',
+      redirect: 'follow',
+      referrer: 'no-referrer',
     })
       .then(response => {
         response.json()
           .then(data => {
             this.idbOpen.then(db => {
               if (!db) return;
-              // Put fetched reviews into IDB
               const tx = db.transaction('reviews-obj', 'readwrite');
               const store = tx.objectStore('reviews-obj');
               store.put(data);
@@ -352,21 +279,15 @@ class DBHelper {
           });
       })
       .catch(error => {
-        /**
-			 * Network offline.
-			 * Add a unique updatedAt property to the review
-			 * and store it in the IDB.
-			 */
         data['updatedAt'] = new Date().getTime();
         console.log(data);
 			
         this.idbOpen.then(db => {
           if (!db) return;
-          // Put fetched reviews into IDB
           const tx = db.transaction('offline-reviews', 'readwrite');
           const store = tx.objectStore('offline-reviews');
           store.put(data);
-          console.log('Review stored offline in IDB');
+          console.log('Stored offline in IDB');
         });
         return;
       });
@@ -378,7 +299,6 @@ class DBHelper {
       const tx = db.transaction('offline-reviews');
       const store = tx.objectStore('offline-reviews');
       store.getAll().then(offlineReviews => {
-        console.log(offlineReviews);
         offlineReviews.forEach(review => {
           DBHelper.submitReview(review);
         });

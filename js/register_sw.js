@@ -1,15 +1,12 @@
 navigator.serviceWorker.register('sw.js')
   .then((reg) => {
     console.log('SW Registration successful. Scope is ' + reg.scope);
-
     if (!navigator.serviceWorker.controller) {
       return;
     }
-
     if (reg.waiting) {
       navigator.serviceWorker.controller.postMessage({ action: 'skipWaiting' });
     }
-
     if (reg.installing) {
       navigator.serviceWorker.addEventListener('statechange', function () {
         if (navigator.serviceWorker.controller.state == 'installed') {
@@ -17,7 +14,6 @@ navigator.serviceWorker.register('sw.js')
         }
       });
     }
-
     reg.addEventListener('updatefound', function () {
       navigator.serviceWorker.addEventListener('statechange', function () {
         if (navigator.serviceWorker.controller.state == 'installed') {
@@ -48,7 +44,7 @@ function onOnline() {
   DBHelper.submitOfflineReviews();
   /*eslint-enable no-undef*/
 }
-  
+
 function onOffline() {
   console.log('Offline');
 }

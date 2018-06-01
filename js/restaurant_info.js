@@ -6,16 +6,6 @@
 let restaurant;
 var map;
 /*eslint-enable no-unused-vars*/
-/**
- * Initialize ServiceWorker
- */
-/*eslint-disable no-unused-vars*/
-document.addEventListener('DOMContentLoaded', (event) => {
-  /*eslint-disable no-undef*/
-  // DBHelper.startServiceWorker();
-  /*eslint-enable no-undef*/
-});
-/*eslint-enable no-undef*/
 
 /**
  * Initialize Google map, called from HTML.
@@ -102,9 +92,9 @@ function fillRestaurantHTML(restaurant = self.restaurant) { // OK
 /**
  * Create restaurant operating hours HTML table and add it to the webpage.
  */
+/*eslint-disable no-unused-vars*/
 function fillRestaurantHoursHTML(operatingHours = self.restaurant.operating_hours) { // OK
   const hours = document.getElementById('restaurant-hours');
-  //for (let key in operatingHours) {
   for (let key in operatingHours) {
     const row = document.createElement('tr');
 
@@ -122,7 +112,7 @@ function fillRestaurantHoursHTML(operatingHours = self.restaurant.operating_hour
     hours.tabIndex = '0';
   }
 }
-
+/*eslint-disable no-unused-vars*/
 /**
  * Create all reviews HTML and add them to the webpage.
  */
@@ -175,7 +165,7 @@ function createReviewHTML(review) { // OK
   return li;
 }
 
-const form = document.getElementById('reviewForm');
+const form = document.getElementById('formReview');
 form.addEventListener('submit', function (event) {
   event.preventDefault();
   let review = {'restaurant_id': self.restaurant.id};
@@ -185,7 +175,7 @@ form.addEventListener('submit', function (event) {
   }
   DBHelper.submitReview(review)
     .then(data => {
-      const ul = document.getElementById('reviews-list');
+      const ul = document.getElementById('list-reviews');
       ul.appendChild(createReviewHTML(review));
       form.reset();
     })
