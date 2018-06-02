@@ -239,30 +239,6 @@ nav h1 a {
   text-transform: uppercase; }
 
 /* ====================== Restaurant Details ====================== */
-/* .inside header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-}
-.inside #map-container {
-  background: blue none repeat scroll 0 0;
-  height: 87%;
-  position: fixed;
-  right: 0;
-  top: 80px;
-  width: 50%;
-}
-.inside #map {
-  background-color: #ccc;
-  height: 100%;
-  width: 100%;
-}
-.inside #footer {
-  bottom: 0;
-  position: absolute;
-  width: 50%;
-} */
 #restaurant-name {
   color: #f18200;
   font-family: Arial,sans-serif;
@@ -299,9 +275,6 @@ nav h1 a {
   border-top: 1px solid #fff;
   padding: 1.5em; }
 
-#reviews-container {
-  /* padding: 30px 40px 80px; */ }
-
 #reviews-container h2 {
   color: #f58500;
   font-size: 24pt;
@@ -309,23 +282,49 @@ nav h1 a {
   letter-spacing: -1px;
   padding-bottom: 1pt; }
 
-#reviews-list {
-  margin: 0;
-  padding: 0; }
+  #list-reviews {
+    margin: 0;
+    padding: 0; }
 
-#reviews-list li {
-  background-color: #fff;
-  border: 2px solid #f3f3f3;
-  display: block;
-  list-style-type: none;
-  margin: 0 0 30px;
-  overflow: hidden;
-  padding: 0 20px 20px;
-  position: relative;
-  /* width: 85%; */ }
+  #list-reviews li, #formReview {
+    background-color: #fff;
+    display: flex;
+    flex-wrap:wrap;
+    list-style-type: none;
+    margin: 0 0 30px;
+    overflow: hidden;
+    padding: 0;
+    position: relative; }
 
-#reviews-list li p {
-  margin: 0 0 10px; }
+  #list-reviews li p, #formReview p {
+    margin: 0 0 10px; }
+
+  #list-reviews li p:nth-child(1), #formReview p:nth-child(1) {
+    padding: 5px;
+    background-color: #444;
+    color: white;
+    width: calc(100% - 140px); }
+
+  #list-reviews li p:nth-child(2), #formReview p:nth-child(2) {
+    padding: 5px;
+    background-color: #444;
+    color: white;
+    width: 120px; }
+
+  #list-reviews li p:nth-child(3), #formReview p:nth-child(3) {
+    padding: 4px;
+    margin-left: 5px;
+    border-radius: 3px; }
+
+  #list-reviews li p:nth-child(4), #formReview p:nth-child(4) {
+    margin: 0 5px 10px 5px;
+    width: 100%; }
+
+  #formReview p:nth-child(4) textarea {
+    width: calc(100% - 5px); }
+
+  #formReview p:nth-child(5) {
+    margin-left: 5px; }
 
 #restaurant-hours td {
   color: #666; }

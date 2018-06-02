@@ -180,12 +180,15 @@ class DBHelper {
   static fetchRestaurantReviews(restaurant, callback) {
     DBHelper.idbOpen.then(db => {
       if (!db) return;
+      // 1. Check if there are reviews in the IDB
       const tx = db.transaction('reviews-obj');
       const store = tx.objectStore('reviews-obj');
       store.getAll().then(results => {
         if (results && results.length > 0) {
+          // Continue with reviews from IDB
           callback(null, results);
         } else {
+          // 2. If there are no reviews in the IDB, fetch reviews from the network
           fetch(`${DBHelper.DB_URL}/reviews/?restaurant_id=${restaurant.id}`)
             .then(response => {
               return response.json();
@@ -193,15 +196,18 @@ class DBHelper {
             .then(reviews => {
               this.idbOpen.then(db => {
                 if (!db) return;
+                // 3. Put fetched reviews into IDB
                 const tx = db.transaction('reviews-obj', 'readwrite');
                 const store = tx.objectStore('reviews-obj');
                 reviews.forEach(review => {
                   store.put(review);
                 });
               });
+              // Continue with reviews from network
               callback(null, reviews);
             })
             .catch(error => {
+              // Unable to fetch reviews from network
               callback(error, null);
             });
         }
@@ -315,6 +321,7 @@ class DBHelper {
     return;
   }
 
+  
   static toggleFavorite(restaurant, isFavorite) {
     fetch(`${DBHelper.DB_URL}/restaurants/${restaurant.id}/?is_favorite=${isFavorite}`, {
       method: 'PUT'

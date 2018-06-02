@@ -130,7 +130,7 @@ function fillReviewsHTML(reviews = self.restaurant.reviews) { // OK
     container.appendChild(noReviews);
     return;
   }
-  const ul = document.getElementById('reviews-list');
+  const ul = document.getElementById('list-reviews');
   reviews.forEach(review => {
     ul.appendChild(this.createReviewHTML(review));
   });

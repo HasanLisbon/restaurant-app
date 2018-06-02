@@ -44,10 +44,5 @@ function onOnline() {
   DBHelper.submitOfflineReviews();
   /*eslint-enable no-undef*/
 }
-
-function onOffline() {
-  console.log('Offline');
-}
   
 window.addEventListener('online', onOnline);
-window.addEventListener('offline', onOffline);
