@@ -68,6 +68,12 @@ function fillRestaurantHTML(restaurant = self.restaurant) { // OK
   name.innerHTML = restaurant.name;
   name.tabIndex = '0';
 
+  const favCheck = document.getElementById('favCheck');
+  favCheck.checked = restaurant.is_favorite;
+  favCheck.addEventListener('change', event => {
+    DBHelper.toggleFavorite(restaurant, event.target.checked);
+  });
+
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;
   address.tabIndex = '0';
@@ -76,6 +82,7 @@ function fillRestaurantHTML(restaurant = self.restaurant) { // OK
   image.className = 'restaurant-img';
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
   image.setAttribute('alt', 'Photo of the ' + restaurant.name + ' restaurant');
+  image.tabIndex = '0';
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
