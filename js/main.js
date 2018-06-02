@@ -4,9 +4,9 @@
 let restaurants,
   neighborhoods,
   cuisines;
-let fakeMap = true;
 var map;
 var markers = [];
+let showMarkersOnMap = false;
 /*eslint-enable no-unused-vars*/
 
 /**
@@ -59,8 +59,6 @@ function fetchCuisines() { // OK
     } else {
       self.cuisines = cuisines;
       fillCuisinesHTML();
-      document.getElementById('fake-map').addEventListener('click', initMap);
-      updateRestaurants();
     }
   });
 }
@@ -82,7 +80,7 @@ function fillCuisinesHTML(cuisines = self.cuisines) { // OK
 /**
  * Initialize Google map, called from HTML.
  */
-function initMap() { // OK
+function initMapforView() { // OK
   let loc = {
     lat: 40.722216,
     lng: -73.987501
@@ -92,10 +90,23 @@ function initMap() { // OK
     center: loc,
     scrollwheel: false
   });
-  addMarkersToMap();
-  // updateRestaurants();
-  return fakeMap = false;
+  if (showMarkersOnMap === true) {
+    document.getElementById('map').removeAttribute('class', 'mobile-hidden');
+    addMarkersToMap();
+  }  
 }
+
+/*eslint-disable no-unused-vars*/
+function initMap() {
+  if (window.innerWidth > 799) {
+    initMapforView();
+  } else {
+    document.getElementById('init-map').addEventListener('click', initMapforView);
+    showMarkersOnMap = true;
+  }
+  updateRestaurants();
+}
+/*eslint-enable no-unused-vars*/
 
 /**
  * Update page and map for current restaurants.
@@ -144,7 +155,7 @@ function fillRestaurantsHTML(restaurants = self.restaurants) { // OK
     ul.append(createRestaurantHTML(restaurant));
   });
   addLazyLoader();
-  // if (fakeMap === false) addMarkersToMap();
+  addMarkersToMap();
 }
 
 /**

@@ -16,13 +16,14 @@
     <a href="#filter-options" class="skip-link">Skip to the main content</a>
     <nav>
       <h1><a href="/">Restaurant Reviews</a></h1>
+      <a id="init-map" aria-label="View Details Restaurant Mission Chinese Food">View Map</a>
     </nav>
   </header>
 
   <main id="maincontent">
     <section id="map-container">
-      <div id="map" role="application" tabindex="-1">
-          <p id="fake-map" alt="Google Map"></p>
+      <div id="map" class="mobile-hidden" role="application" tabindex="-1">
+          <!-- <p id="fake-map" alt="Google Map"></p> -->
       </div>  
     </section>
     <section id="filter-options" tabindex="0">
@@ -42,7 +43,7 @@
   <script type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>
   <script type="application/javascript" charset="utf-8" src="js/main.js"></script>
   <script type="application/javascript" charset="utf-8" src="js/register_sw.js"></script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKsD3Iz_-scs8QAKYhnFz07U1_SaxfEGo&libraries=places"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKsD3Iz_-scs8QAKYhnFz07U1_SaxfEGo&libraries=places&callback=initMap"></script>
 
 
   <footer id="footer">

@@ -1,28 +1,64 @@
-# Mobile Web Specialist Certification Course
----
-#### _Three Stage Course Material Project - Restaurant Reviews_
+# Restaurant Review App
 
-## Project Overview: Stage 1
+This app  is created as part of the Udacity Nanodegree "Mobile Web Specialist". The project is divided into three stages and includes:
 
-For the **Restaurant Reviews** projects, you will incrementally convert a static webpage to a mobile-ready web application. In **Stage One**, you will take a static design that lacks accessibility and convert the design to be responsive on different sized displays and accessible for screen reader use. You will also add a service worker to begin the process of creating a seamless offline experience for your users.
+- accessibility
+- responsiveness
+- offline first
+- offline first with IDB
+- POST requests with offline-first approach
+- a form to submit data
+- performance ([Lighthouse](https://developers.google.com/web/tools/lighthouse/) performance >90)
 
-### Specification
+## Features
 
-You have been provided the code for a restaurant reviews website. The code has a lot of issues. It’s barely usable on a desktop browser, much less a mobile device. It also doesn’t include any standard accessibility features, and it doesn’t work offline at all. Your job is to update the code to resolve these issues while still maintaining the included functionality. 
+- View all restaurants
+- View restaurants for a specific district or cuisine
+- View details to a restaurant like opening hours and reviews
+- Write reviews for a restaurant
+- Mark a restaurant as favorite
+- View already loaded pages also in offline mode
+- Accessibility: Use the app with screen reader or keyboard-only
 
-### What do I do from here?
+## How to start the app
 
-1. In this folder, start up a simple HTTP server to serve up the site files on your local computer. Python has some simple tools to do this, and you don't even need to know Python. For most people, it's already installed on your computer. 
+1. Install glup
+```
+npm install gulp-cli -g
+```
 
-In a terminal, check the version of Python you have: `python -V`. If you have Python 2.x, spin up the server with `python -m SimpleHTTPServer 8000` (or some other port, if port 8000 is already in use.) For Python 3.x, you can use `python3 -m http.server 8000`. If you don't have Python installed, navigate to Python's [website](https://www.python.org/) to download and install the software.
+2. Install project dependencies
 
-2. With your server running, visit the site: `http://localhost:8000`, and look around for a bit to see what the current experience looks like.
-3. Explore the provided code, and make start making a plan to implement the required features in three areas: responsive design, accessibility and offline use.
-4. Write code to implement the updates to get this site on its way to being a mobile-ready website.
+```
+npm install
+```
 
-### Note about ES6
+3. Buil your app to `dist` directory
 
-Most of the code in this project has been written to the ES6 JavaScript specification for compatibility with modern web browsers and future proofing JavaScript code. As much as possible, try to maintain use of ES6 in any additional JavaScript you write. 
+```
+gulp dist
+```
 
+4. Start webserver to serve content
 
+```
+gulp webserver
+```
 
+5. Open your browser on [localhost:8000](http://localhost:8000).
+
+## Data from node server
+
+```
+$ git clone https://github.com/udacity/mws-restaurant-stage-3.git
+$ cd mws-restaurant-stage-3
+$ npm i
+$ npm i sails -g
+$ node server
+```
+
+# How to contribute
+Refer to [CONTRIBUTING](CONTRIBUTING) file.
+
+# License
+Refer to [LICENSE](LICENSE) file.
